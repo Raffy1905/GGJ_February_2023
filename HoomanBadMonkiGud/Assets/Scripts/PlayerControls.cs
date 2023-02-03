@@ -36,7 +36,6 @@ public class PlayerControls : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 movement = new Vector2(Time.deltaTime * speed * Input.GetAxis("Horizontal"), 0);
-        Debug.Log(grounded);
         if(Input.GetButtonDown("Jump") && grounded)
         {
             player.AddForce(Vector2.up * jumpPower);
