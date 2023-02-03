@@ -32,16 +32,13 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         Vector2 movement = new Vector2(Time.deltaTime * speed * Input.GetAxis("Horizontal"), 0);
-        Debug.Log(grounded);
-        if(Input.GetButtonDown("Jump") && grounded)
+        if(Input.GetButton("Jump")&& grounded)
         {
-            player.AddForce(Vector2.up * jumpPower);
+            player.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
-
 
         transform.Translate(movement);
     }
