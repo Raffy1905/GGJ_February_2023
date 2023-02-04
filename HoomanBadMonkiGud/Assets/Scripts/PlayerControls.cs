@@ -10,7 +10,11 @@ public class PlayerControls : MonoBehaviour
     public Rigidbody2D player;
     public BoxCollider2D playerCollider;
     public int speed, jumpPower;
-
+    public GameObject bullet;
+    
+    public float shootDelay;
+    float lastTimeShot;
+    
     private bool _grounded, _collidedWithRightWall, _collidedWithLeftWall, _collidedWithRoof;
     private Dictionary<GameObject, CollisionDirection> collidingGround = new Dictionary<GameObject, CollisionDirection>();
 
@@ -20,6 +24,7 @@ public class PlayerControls : MonoBehaviour
         _collidedWithRightWall = false;
         _collidedWithLeftWall = false;
         _collidedWithRoof = false;
+        lastTimeShot = Time.time;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -49,6 +54,16 @@ public class PlayerControls : MonoBehaviour
                     _grounded = true;
                 }
             }
+    }
+
+    private void Shoot()
+    {
+        if((Time.time - lastTimeShot) > shootDelay)
+        {
+            lastTimeShot = Time.time;
+            GameObject bulletInstance = Instantiate(bullet, player.transform.position, bullet.transform.rotation);
+            Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), bulletInstance.GetComponent<Collider2D>());
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -84,6 +99,14 @@ public class PlayerControls : MonoBehaviour
         }
     }
     
+    private void Update()
+    {
+        if(Input.GetButtonDown("Fire1"))
+        {
+            Shoot();
+        } 
+    }
+
     void FixedUpdate()
     {
         Vector2 movement = new Vector2(0, 0);
