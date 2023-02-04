@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Bullet : MonoBehaviour
 {
-    private Rigidbody2D bullet;
+    public Rigidbody2D bullet;
     protected Vector2 direction;
     public float bulletSpeed;
     private readonly float lifespan = 3;
@@ -13,7 +13,7 @@ public abstract class Bullet : MonoBehaviour
     protected abstract void OnEnemyCollision();
     protected abstract void Move();
 
-    private void Start()
+    protected void Start()
     {
         Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
         direction = (worldMousePosition - (Vector2)this.transform.position).normalized;

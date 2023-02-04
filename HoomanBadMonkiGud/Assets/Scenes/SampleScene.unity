@@ -159,7 +159,7 @@ MonoBehaviour:
   player: {fileID: 172464667}
   speed: 10
   jumpPower: 5
-  bullet: {fileID: 542911102878127681, guid: 3a826afe11df4ab4380eaa3c0c936761, type: 3}
+  bullet: {fileID: 6825745435587475909, guid: 8a2b71f881e45a346b470a9df45d7170, type: 3}
   shootDelay: 0.2
 --- !u!212 &172464664
 SpriteRenderer:
@@ -454,7 +454,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1330962857
 BoxCollider2D:
@@ -491,7 +491,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
       propertyPath: m_LocalPosition.x
