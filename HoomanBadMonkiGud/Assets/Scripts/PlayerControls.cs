@@ -8,12 +8,16 @@ public class PlayerControls : MonoBehaviour
 
     public Rigidbody2D player;
     public int speed, jumpPower;
+    public GameObject bullet;
 
+    public float shootDelay;
+    float lastTimeShot;
     bool grounded;
 
     void Start()
     {
         grounded = false;
+        lastTimeShot = Time.time;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -22,6 +26,15 @@ public class PlayerControls : MonoBehaviour
         {
             grounded = true;
             player.velocity = new Vector2(player.velocity.x, 0);
+        }
+    }
+
+    private void Shoot()
+    {
+        if((Time.time - lastTimeShot) > shootDelay)
+        {
+            lastTimeShot = Time.time;
+            Instantiate(bullet, player.transform.position, bullet.transform.rotation);
         }
     }
 
@@ -42,5 +55,10 @@ public class PlayerControls : MonoBehaviour
         }
 
         transform.Translate(movement);
+        
+        if(Input.GetButtonDown("Fire1"))
+        {
+            Shoot();
+        } 
     }
 }
