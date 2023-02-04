@@ -8,12 +8,16 @@ public class PlayerControls : MonoBehaviour
 
     public Rigidbody2D player;
     public int speed, jumpPower;
+    public GameObject bullet;
 
+    public float shootDelay;
+    float lastTimeShot;
     bool grounded;
 
     void Start()
     {
         grounded = false;
+        lastTimeShot = Time.time;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -25,12 +29,30 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    private void Shoot()
+    {
+        if((Time.time - lastTimeShot) > shootDelay)
+        {
+            lastTimeShot = Time.time;
+            GameObject bulletInstance = Instantiate(bullet, player.transform.position, bullet.transform.rotation);
+            Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), bulletInstance.GetComponent<Collider2D>());
+        }
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             grounded = false;
         }
+    }
+
+    private void Update()
+    {
+        if(Input.GetButtonDown("Fire1"))
+        {
+            Shoot();
+        } 
     }
 
     void FixedUpdate()
