@@ -34,7 +34,8 @@ public class PlayerControls : MonoBehaviour
         if((Time.time - lastTimeShot) > shootDelay)
         {
             lastTimeShot = Time.time;
-            Instantiate(bullet, player.transform.position, bullet.transform.rotation);
+            GameObject bulletInstance = Instantiate(bullet, player.transform.position, bullet.transform.rotation);
+            Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), bulletInstance.GetComponent<Collider2D>());
         }
     }
 
@@ -46,6 +47,14 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(Input.GetButtonDown("Fire1"))
+        {
+            Shoot();
+        } 
+    }
+
     void FixedUpdate()
     {
         Vector2 movement = new Vector2(Time.deltaTime * speed * Input.GetAxis("Horizontal"), 0);
@@ -55,10 +64,5 @@ public class PlayerControls : MonoBehaviour
         }
 
         transform.Translate(movement);
-        
-        if(Input.GetButtonDown("Fire1"))
-        {
-            Shoot();
-        } 
     }
 }
