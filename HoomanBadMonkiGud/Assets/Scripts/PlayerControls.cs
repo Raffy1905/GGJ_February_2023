@@ -14,8 +14,9 @@ public class PlayerControls : MonoBehaviour
     
     public float shootDelay;
     float lastTimeShot;
-    
-    private bool _grounded, _collidedWithRightWall, _collidedWithLeftWall, _collidedWithRoof;
+
+    private bool _ableToClimb;
+    private bool _grounded, _collidedWithRightWall, _collidedWithLeftWall, _collidedWithRoof, _climbing;
     private Dictionary<GameObject, CollisionDirection> collidingGround = new Dictionary<GameObject, CollisionDirection>();
 
     void Start()
@@ -24,6 +25,7 @@ public class PlayerControls : MonoBehaviour
         _collidedWithRightWall = false;
         _collidedWithLeftWall = false;
         _collidedWithRoof = false;
+        _climbing = false;
         lastTimeShot = Time.time;
     }
 
@@ -54,6 +56,16 @@ public class PlayerControls : MonoBehaviour
                     _grounded = true;
                 }
             }
+            
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Liane"))
+        {
+            _ableToClimb = true;
+            Debug.Log("now you can climb");
+        }
     }
 
     private void Shoot()
@@ -98,7 +110,16 @@ public class PlayerControls : MonoBehaviour
             collidingGround.Remove(collision.gameObject);
         }
     }
-    
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Liane"))
+        {
+            _ableToClimb = false;
+            Debug.Log("no climbing for you lol");
+        }
+    }
+
     private void Update()
     {
         if(Input.GetButtonDown("Fire1"))
@@ -111,11 +132,23 @@ public class PlayerControls : MonoBehaviour
     {
         Vector2 movement = new Vector2(0, 0);
         if ((!_collidedWithRightWall && Input.GetAxis("Horizontal") < 0) || 
-            (!_collidedWithLeftWall && Input.GetAxis("Horizontal") > 0))
+            (!_collidedWithLeftWall && Input.GetAxis("Horizontal") > 0) && !_climbing)
         {
             movement += new Vector2(Time.deltaTime * speed * Input.GetAxis("Horizontal"), 0);
-            transform.Translate(movement);
         }
+        if (_ableToClimb && Input.GetAxis("Vertical") != 0)
+        {
+            _climbing = true;
+            player.gravityScale = 0;
+            movement += new Vector2(0, Time.deltaTime * speed * Input.GetAxis("Vertical"));
+        }
+        else
+        {
+            _climbing = false;
+            player.gravityScale = 1;
+        }
+        
+        transform.Translate(movement);
         if(Input.GetButton("Jump") && _grounded)
         {
             player.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
