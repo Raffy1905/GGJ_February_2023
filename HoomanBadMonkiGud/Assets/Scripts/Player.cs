@@ -2,8 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
+
+    protected override void Attack()
+    {
+        // Attack is not used -> PlayerController.Shoot();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
