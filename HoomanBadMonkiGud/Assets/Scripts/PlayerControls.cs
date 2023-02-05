@@ -138,7 +138,7 @@ public class PlayerControls : MonoBehaviour
         {
             Shoot();
         }
-        if(Input.GetButton("Jump"))
+        if(Input.GetButtonDown("Jump"))
         {
             if (_grounded)
             {
@@ -146,7 +146,7 @@ public class PlayerControls : MonoBehaviour
                 player.AddForce(Vector2.up * Player.Instance.GetJumpPower(), ForceMode2D.Impulse);
             }
             if (_climbing && !_grounded)
-            {                
+            {
                 _climbing = false;
                 player.gravityScale = 1;
                 player.AddForce(new Vector2(Player.Instance.GetJumpPower() * Input.GetAxis("Horizontal") / 4, 0), ForceMode2D.Impulse);
