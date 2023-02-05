@@ -11,6 +11,10 @@ public abstract class Entity : MonoBehaviour
     protected void Hurt(int damage)
     {
         health -= damage;
+        if(health < 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     
