@@ -71,6 +71,7 @@ public class Player : Entity
 
     public void Devolve()
     {
+        AudioManager.Instance.PlayByName("devolve");
         switch (state)
         {
             case DevolutionState.HUMAN:
