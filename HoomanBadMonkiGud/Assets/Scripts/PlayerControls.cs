@@ -5,11 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
-{
-
-    public Rigidbody2D player;
-    public BoxCollider2D playerCollider;
-    
+{   
     public float shootDelay;
     float lastTimeShot;
 
@@ -31,7 +27,7 @@ public class PlayerControls : MonoBehaviour
     {
             if (collision.gameObject.CompareTag("Ground"))
             {
-                Vector2 dir = collision.collider.ClosestPoint(collision.contacts[0].point) - playerCollider.ClosestPoint(collision.contacts[0].point);
+                Vector2 dir = collision.collider.ClosestPoint(collision.contacts[0].point) - Player.Instance.ownCollider.ClosestPoint(collision.contacts[0].point);
                 dir = dir.normalized;
                 if (dir == Vector2.up)
                 {
@@ -41,12 +37,12 @@ public class PlayerControls : MonoBehaviour
                 {
                     collidingGround.Add(collision.gameObject, CollisionDirection.Left);
                     _collidedWithLeftWall = true;
-                    player.velocity = new Vector2(0, player.velocity.y);
+                    Player.Instance.ownRigidbody.velocity = new Vector2(0, Player.Instance.ownRigidbody.velocity.y);
                 }else if (dir == Vector2.left)
                 {
                     collidingGround.Add(collision.gameObject, CollisionDirection.Right);
                     _collidedWithRightWall = true;
-                    player.velocity = new Vector2(0, player.velocity.y);
+                    Player.Instance.ownRigidbody.velocity = new Vector2(0, Player.Instance.ownRigidbody.velocity.y);
                 }
                 else
                 {
@@ -72,7 +68,7 @@ public class PlayerControls : MonoBehaviour
             Player.Instance.Shoot();
 
             lastTimeShot = Time.time;
-            GameObject bulletInstance = Instantiate(Player.Instance.GetBullet(), player.transform.position, Player.Instance.GetBullet().transform.rotation);
+            GameObject bulletInstance = Instantiate(Player.Instance.GetBullet(), Player.Instance.ownRigidbody.transform.position, Player.Instance.GetBullet().transform.rotation);
             Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), bulletInstance.GetComponent<Collider2D>());
 
         }
@@ -113,7 +109,7 @@ public class PlayerControls : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.bounds.max.y > playerCollider.bounds.max.y) 
+        if (other.bounds.max.y > Player.Instance.ownCollider.bounds.max.y) 
         {
             _climbingTopReached = false;
         }
@@ -143,13 +139,13 @@ public class PlayerControls : MonoBehaviour
             if (_grounded)
             {
                 Player.Instance.Jump();
-                player.AddForce(Vector2.up * Player.Instance.GetJumpPower(), ForceMode2D.Impulse);
+                Player.Instance.ownRigidbody.AddForce(Vector2.up * Player.Instance.GetJumpPower(), ForceMode2D.Impulse);
             }
             if (_climbing && !_grounded)
             {
                 _climbing = false;
-                player.gravityScale = 1;
-                player.AddForce(new Vector2(Player.Instance.GetJumpPower() * Input.GetAxis("Horizontal") / 4, 0), ForceMode2D.Impulse);
+                Player.Instance.ownRigidbody.gravityScale = 1;
+                Player.Instance.ownRigidbody.AddForce(new Vector2(Player.Instance.GetJumpPower() * Input.GetAxis("Horizontal") / 4, 0), ForceMode2D.Impulse);
             }
         }
     }
@@ -174,7 +170,7 @@ public class PlayerControls : MonoBehaviour
 
         if (_climbing)
         {
-            player.gravityScale = 0;
+            Player.Instance.ownRigidbody.gravityScale = 0;
             int axisFactor = Input.GetAxis("Vertical") != 0 ? (Input.GetAxis("Vertical") > 0 ? 1 : -1) : 0;
             movement = new Vector2(0, Time.deltaTime * Player.Instance.GetWalkingSpeed() / Player.Instance.climbingFactor * axisFactor);
             if ((movement.y < 0 && _grounded) || (_climbingTopReached && Input.GetAxis("Vertical") >= 0))
@@ -184,7 +180,7 @@ public class PlayerControls : MonoBehaviour
         }
         else
         {
-            player.gravityScale = 1;
+            Player.Instance.ownRigidbody.gravityScale = 1;
         }
 
         if (_grounded)
