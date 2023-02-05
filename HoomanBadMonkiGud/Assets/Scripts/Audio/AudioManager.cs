@@ -35,6 +35,12 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("Sound " + name + " not found!");
             return;
         }
+
+        if(s.source.isPlaying)
+        {
+            Debug.LogError("Sound " + s.name + " is already playing!");
+            return;
+        }
         Debug.Log("Playing " + s.name);
         s.source.Play();
     }
@@ -46,6 +52,12 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("Index " + index + " out of bounds for Sounds!");
             return;
         }
+
+        if (Sounds[index].source.isPlaying)
+        {
+            Debug.LogError("Sound " + Sounds[index].name + " is already playing!");
+        }
+
         Debug.Log("Playing " + Sounds[index].name);
         Sounds[index].source.Play();
     }

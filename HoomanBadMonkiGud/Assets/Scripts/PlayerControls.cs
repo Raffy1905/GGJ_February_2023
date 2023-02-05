@@ -58,6 +58,8 @@ public class PlayerControls : MonoBehaviour
     {
         if((Time.time - lastTimeShot) > shootDelay)
         {
+            Player.Instance.Shoot();
+
             lastTimeShot = Time.time;
             GameObject bulletInstance = Instantiate(Player.Instance.GetBullet(), player.transform.position, Player.Instance.GetBullet().transform.rotation);
             Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), bulletInstance.GetComponent<Collider2D>());
@@ -106,6 +108,7 @@ public class PlayerControls : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump") && _grounded)
         {
+            Player.Instance.Jump();
             player.AddForce(Vector2.up * Player.Instance.GetJumpPower(), ForceMode2D.Impulse);
         }
     }
