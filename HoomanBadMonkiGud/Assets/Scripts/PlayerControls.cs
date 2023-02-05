@@ -9,11 +9,12 @@ public class PlayerControls : MonoBehaviour
 
     public Rigidbody2D player;
     public BoxCollider2D playerCollider;
-
+    
     public float shootDelay;
     float lastTimeShot;
-    
-    private bool _grounded, _collidedWithRightWall, _collidedWithLeftWall, _collidedWithRoof;
+
+    private bool _ableToClimb;
+    private bool _grounded, _collidedWithRightWall, _collidedWithLeftWall, _collidedWithRoof, _climbing, _climbingTopReached;
     private Dictionary<GameObject, CollisionDirection> collidingGround = new Dictionary<GameObject, CollisionDirection>();
 
     void Start()
@@ -22,6 +23,7 @@ public class PlayerControls : MonoBehaviour
         _collidedWithRightWall = false;
         _collidedWithLeftWall = false;
         _collidedWithRoof = false;
+        _climbing = false;
         lastTimeShot = Time.time;
     }
 
@@ -52,6 +54,15 @@ public class PlayerControls : MonoBehaviour
                     _grounded = true;
                 }
             }
+            
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Liane"))
+        {
+            _ableToClimb = true;
+        }
     }
 
     private void Shoot()
@@ -99,29 +110,88 @@ public class PlayerControls : MonoBehaviour
             collidingGround.Remove(collision.gameObject);
         }
     }
-    
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.bounds.max.y > playerCollider.bounds.max.y) 
+        {
+            _climbingTopReached = false;
+        }
+        else
+        {
+            _climbingTopReached = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Liane"))
+        {
+            _ableToClimb = false;
+            _climbing = false;
+        }
+    }
+
     private void Update()
     {
         if(Input.GetButtonDown("Fire1"))
         {
             Shoot();
         }
-        if (Input.GetButtonDown("Jump") && _grounded)
+        if(Input.GetButton("Jump"))
         {
-            Player.Instance.Jump();
-            player.AddForce(Vector2.up * Player.Instance.GetJumpPower(), ForceMode2D.Impulse);
+            if (_grounded)
+            {
+                Player.Instance.Jump();
+                player.AddForce(Vector2.up * Player.Instance.GetJumpPower(), ForceMode2D.Impulse);
+            }
+            if (_climbing && !_grounded)
+            {                
+                _climbing = false;
+                player.gravityScale = 1;
+                player.AddForce(new Vector2(Player.Instance.GetJumpPower() * Input.GetAxis("Horizontal") / 4, 0), ForceMode2D.Impulse);
+            }
         }
     }
 
     void FixedUpdate()
     {
         Vector2 movement = new Vector2(0, 0);
-        if ((!_collidedWithRightWall && Input.GetAxis("Horizontal") < 0) || 
-            (!_collidedWithLeftWall && Input.GetAxis("Horizontal") > 0))
+        if (((!_collidedWithRightWall && Input.GetAxis("Horizontal") < 0) || 
+            (!_collidedWithLeftWall && Input.GetAxis("Horizontal") > 0)))
         {
             movement += new Vector2(Time.deltaTime * Player.Instance.GetWalkingSpeed() * Input.GetAxis("Horizontal"), 0);
-            transform.Translate(movement);
         }
         
+        if ((_ableToClimb && Input.GetAxis("Vertical") != 0) || _climbing)
+        {
+            _climbing = true;
+        }
+        else
+        {
+            _climbing = false;
+        }
+
+        if (_climbing)
+        {
+            player.gravityScale = 0;
+            int axisFactor = Input.GetAxis("Vertical") != 0 ? (Input.GetAxis("Vertical") > 0 ? 1 : -1) : 0;
+            movement = new Vector2(0, Time.deltaTime * Player.Instance.GetWalkingSpeed() / Player.Instance.climbingFactor * axisFactor);
+            if ((movement.y < 0 && _grounded) || (_climbingTopReached && Input.GetAxis("Vertical") >= 0))
+            {
+                movement.y = 0;
+            } 
+        }
+        else
+        {
+            player.gravityScale = 1;
+        }
+
+        if (_grounded)
+        {
+            _climbing = false;
+        }
+        
+        transform.Translate(movement);
     }
 }

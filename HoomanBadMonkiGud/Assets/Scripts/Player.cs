@@ -21,6 +21,7 @@ public class Player : Entity
 
     public float humanSpeed = 3, cavemenSpeed = 5, monkeySpeed = 7;
     public float humanJump = 5, cavemenJump = 8, monkeyJump = 10;
+    public float climbingFactor = 5;
 
     private void Awake()
     {
