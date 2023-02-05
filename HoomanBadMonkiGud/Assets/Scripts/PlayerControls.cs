@@ -104,7 +104,11 @@ public class PlayerControls : MonoBehaviour
         if(Input.GetButtonDown("Fire1"))
         {
             Shoot();
-        } 
+        }
+        if (Input.GetButtonDown("Jump") && _grounded)
+        {
+            player.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        }
     }
 
     void FixedUpdate()
@@ -115,10 +119,6 @@ public class PlayerControls : MonoBehaviour
         {
             movement += new Vector2(Time.deltaTime * speed * Input.GetAxis("Horizontal"), 0);
             transform.Translate(movement);
-        }
-        if(Input.GetButton("Jump") && _grounded)
-        {
-            player.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
     }
 }
