@@ -123,63 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &308008124
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 77.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -25
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390686, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_Name
-      value: DNA to Monke
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
 --- !u!1 &601022007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,6 +1012,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blocker: {fileID: 0}
+  blocker: {fileID: 1878651640}
+--- !u!61 &1856420985 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5019534513000165743, guid: 02edc0bfa987ab84b8a5540ad1825370, type: 3}
+  m_PrefabInstance: {fileID: 3280809938206798604}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &1856420986 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 120074071704463612, guid: 02edc0bfa987ab84b8a5540ad1825370, type: 3}
+  m_PrefabInstance: {fileID: 3280809938206798604}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1878651640
 GameObject:
   m_ObjectHideFlags: 0
@@ -66397,11 +66351,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3280809939691982991, guid: 02edc0bfa987ab84b8a5540ad1825370, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 52.12
       objectReference: {fileID: 0}
     - target: {fileID: 3280809939691982991, guid: 02edc0bfa987ab84b8a5540ad1825370, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 3280809939691982991, guid: 02edc0bfa987ab84b8a5540ad1825370, type: 3}
       propertyPath: m_LocalPosition.z
@@ -66443,5 +66397,13 @@ PrefabInstance:
       propertyPath: humanJump
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4048156765020568139, guid: 02edc0bfa987ab84b8a5540ad1825370, type: 3}
+      propertyPath: ownCollider
+      value: 
+      objectReference: {fileID: 1856420985}
+    - target: {fileID: 4048156765020568139, guid: 02edc0bfa987ab84b8a5540ad1825370, type: 3}
+      propertyPath: ownRigidbody
+      value: 
+      objectReference: {fileID: 1856420986}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02edc0bfa987ab84b8a5540ad1825370, type: 3}

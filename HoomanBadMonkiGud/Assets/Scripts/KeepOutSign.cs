@@ -12,6 +12,11 @@ public class KeepOutSign : MonoBehaviour
         if(collider.CompareTag("Player"))
         {
             //TODO: Dialogue
+            if(Player.Instance.GetDevolutionState() == Player.DevolutionState.HUMAN)
+            {
+                Player.Instance.ownRigidbody.AddForce(new Vector2(-5, 2), ForceMode2D.Impulse);
+            }
+            Destroy(blocker);
         }
     }
 }
