@@ -123,63 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &308008124
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 77.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -25
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390682, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 131509154673390686, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
-      propertyPath: m_Name
-      value: DNA to Monke
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b1794bfb1ccc26544bd69ee6c760abdb, type: 3}
 --- !u!1 &601022007
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,20 +407,32 @@ MonoBehaviour:
     volume: 0.369
     source: {fileID: 0}
   - name: shoot
-    clip: {fileID: 8300000, guid: 2b997f32bf6ffb34a885665874864a7c, type: 3}
+    clip: {fileID: 8300000, guid: 1d3a1c0e076d4eb4885546b0abcc57ee, type: 3}
     volume: 0.443
     source: {fileID: 0}
   - name: rock
-    clip: {fileID: 8300000, guid: 153b9cf638cec3e4a8ee6957893c70c6, type: 3}
+    clip: {fileID: 8300000, guid: 57ef24a8b90091e4180125d12e1b2517, type: 3}
     volume: 0.443
     source: {fileID: 0}
   - name: boomerang
-    clip: {fileID: 8300000, guid: 9f38e82a79bd5a24799005b4d3fc0784, type: 3}
+    clip: {fileID: 8300000, guid: 1177b45ab2818e94e8f0332255f09831, type: 3}
     volume: 0.443
     source: {fileID: 0}
   - name: monkey attack
-    clip: {fileID: 8300000, guid: 6a2cf9d0deec87348b0e004b0a531549, type: 3}
+    clip: {fileID: 8300000, guid: 0eb35b34609e4db48abf7e9a7e4cef12, type: 3}
     volume: 0.443
+    source: {fileID: 0}
+  - name: cave ugh
+    clip: {fileID: 8300000, guid: 3b1cfc21b7c2e7e449838820a3b79cee, type: 3}
+    volume: 0.612
+    source: {fileID: 0}
+  - name: cave ugha
+    clip: {fileID: 8300000, guid: be2a567ec9af8124692ede06a58657d4, type: 3}
+    volume: 0.662
+    source: {fileID: 0}
+  - name: devolve
+    clip: {fileID: 8300000, guid: f93bae48aed66694c92a174526888d05, type: 3}
+    volume: 0.696
     source: {fileID: 0}
 --- !u!1 &1195428902
 GameObject:
@@ -1056,6 +1011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09971e95b5705ca419f38d50670b0e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blocker: {fileID: 0}
   blocker: {fileID: 1878651640}
 --- !u!61 &1856420985 stripped
 BoxCollider2D:
