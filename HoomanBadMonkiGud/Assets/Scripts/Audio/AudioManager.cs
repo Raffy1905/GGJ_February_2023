@@ -39,6 +39,9 @@ public class AudioManager : MonoBehaviour
         if(s.source.isPlaying)
         {
             Debug.LogError("Sound " + s.name + " is already playing!");
+            AudioSource add = s.source as AudioSource;
+            add.clip= s.clip;
+            add.Play();
             return;
         }
         Debug.Log("Playing " + s.name);
@@ -56,6 +59,7 @@ public class AudioManager : MonoBehaviour
         if (Sounds[index].source.isPlaying)
         {
             Debug.LogError("Sound " + Sounds[index].name + " is already playing!");
+            return;
         }
 
         Debug.Log("Playing " + Sounds[index].name);

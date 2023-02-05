@@ -49,6 +49,16 @@ public class Player : Entity
                 AudioManager.Instance.PlayByName("shoot");
                 break;
             case DevolutionState.CAVEMEN:
+                if (Random.Range(0, 10) <= 1)
+                {
+                    if(Random.Range(0, 2) >= 1)
+                    {
+                        AudioManager.Instance.PlayByName("cave ugha");
+                    } else
+                    {
+                        AudioManager.Instance.PlayByName("cave ugh");
+                    }
+                }
                 AudioManager.Instance.PlayByName("rock");
                 break;
             case DevolutionState.MONKE:
