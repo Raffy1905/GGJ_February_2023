@@ -8,6 +8,8 @@ public class PlayerControls : MonoBehaviour
 {   
     public float shootDelay;
     float lastTimeShot;
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
 
     private bool _ableToClimb;
     private bool _grounded, _collidedWithRightWall, _collidedWithLeftWall, _collidedWithRoof, _climbing, _climbingTopReached;
@@ -55,7 +57,7 @@ public class PlayerControls : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Liane"))
+        if (other.gameObject.CompareTag("Liane") && (Player.Instance.GetDevolutionState() == Player.DevolutionState.MONKE))
         {
             _ableToClimb = true;
         }
@@ -130,14 +132,18 @@ public class PlayerControls : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        animator.SetBool("Jumping", false);
+        animator.SetBool("Attacking", false);
+        if (Input.GetButtonDown("Fire1"))
         {
+            animator.SetBool("Attacking", true);
             Shoot();
         }
         if(Input.GetButtonDown("Jump"))
         {
             if (_grounded)
             {
+                animator.SetBool("Jumping", true);
                 Player.Instance.Jump();
                 Player.Instance.ownRigidbody.AddForce(Vector2.up * Player.Instance.GetJumpPower(), ForceMode2D.Impulse);
             }
@@ -152,19 +158,26 @@ public class PlayerControls : MonoBehaviour
 
     void FixedUpdate()
     {
+        animator.SetInteger("state", Player.Instance.GetStateNumber());
+        animator.SetFloat("Speed", 0);
         Vector2 movement = new Vector2(0, 0);
         if (((!_collidedWithRightWall && Input.GetAxis("Horizontal") < 0) || 
             (!_collidedWithLeftWall && Input.GetAxis("Horizontal") > 0)))
         {
+            animator.SetFloat("Speed", 1);
             movement += new Vector2(Time.deltaTime * Player.Instance.GetWalkingSpeed() * Input.GetAxis("Horizontal"), 0);
         }
-        
+
+        spriteRenderer.flipX = Input.GetAxis("Horizontal") > 0;
+
         if ((_ableToClimb && Input.GetAxis("Vertical") != 0) || _climbing)
         {
+            animator.SetFloat("Speed", 0);
             _climbing = true;
         }
         else
         {
+            
             _climbing = false;
         }
 
@@ -187,7 +200,7 @@ public class PlayerControls : MonoBehaviour
         {
             _climbing = false;
         }
-        
+        animator.SetBool("Climbing", _climbing);
         transform.Translate(movement);
     }
 }
