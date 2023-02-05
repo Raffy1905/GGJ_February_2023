@@ -8,6 +8,7 @@ public class CollectableBehavior : MonoBehaviour
     {
         if(collider.CompareTag("Player"))
         {
+            Player.Instance.Devolve();
             Destroy(this.gameObject);
         }
     }
