@@ -9,8 +9,7 @@ public class PlayerControls : MonoBehaviour
 
     public Rigidbody2D player;
     public BoxCollider2D playerCollider;
-    public int speed, jumpPower, climbFactor;
-    public GameObject bullet;
+    climbFactor;
     
     public float shootDelay;
     float lastTimeShot;
@@ -72,7 +71,7 @@ public class PlayerControls : MonoBehaviour
         if((Time.time - lastTimeShot) > shootDelay)
         {
             lastTimeShot = Time.time;
-            GameObject bulletInstance = Instantiate(bullet, player.transform.position, bullet.transform.rotation);
+            GameObject bulletInstance = Instantiate(Player.Instance.GetBullet(), player.transform.position, Player.Instance.GetBullet().transform.rotation);
             Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), bulletInstance.GetComponent<Collider2D>());
         }
     }
@@ -137,6 +136,19 @@ public class PlayerControls : MonoBehaviour
         {
             Shoot();
         }
+        if(Input.GetButton("Jump"))
+        {
+            if (_grounded)
+            {
+                player.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            }
+            if (_climbing && !_grounded)
+            {                
+                _climbing = false;
+                player.gravityScale = 1;
+                player.AddForce(new Vector2(jumpPower * Input.GetAxis("Horizontal") / 4, 0), ForceMode2D.Impulse);
+            }
+        }
     }
 
     void FixedUpdate()
@@ -178,19 +190,6 @@ public class PlayerControls : MonoBehaviour
         }
         
         transform.Translate(movement);
-        
-        if(Input.GetButton("Jump"))
-        {
-            if (_grounded)
-            {
-                player.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            }
-            if (_climbing && !_grounded)
-            {                
-                _climbing = false;
-                player.gravityScale = 1;
-                player.AddForce(new Vector2(jumpPower * Input.GetAxis("Horizontal") / 4, 0), ForceMode2D.Impulse);
-            }
         }
     }
 }
