@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    
+
     public enum DevolutionState
     {
-        HUMAN, CAVEMEN, MONKEY
+        HUMAN, CAVEMEN, MONKE
     }
+
+    public static Player Instance;
 
     public DevolutionState state = DevolutionState.HUMAN;
 
@@ -18,9 +22,40 @@ public class Player : Entity
     public float humanSpeed = 3, cavemenSpeed = 5, monkeySpeed = 7;
     public float humanJump = 5, cavemenJump = 8, monkeyJump = 10;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     protected override void Attack()
     {
         // Attack is not used -> PlayerController.Shoot();
+    }
+
+    public void Devolve()
+    {
+        switch (state)
+        {
+            case DevolutionState.HUMAN:
+                {
+                    state = DevolutionState.CAVEMEN;
+                    break;
+                }
+            case DevolutionState.CAVEMEN:
+                {
+                    state = DevolutionState.MONKE;
+                    break;
+                }
+            default: break;
+        }
     }
 
     public DevolutionState GetDevolutionState()
@@ -30,35 +65,35 @@ public class Player : Entity
 
     public GameObject GetBullet()
     {
-        switch (state)
+        return state switch
         {
-            case DevolutionState.HUMAN: return gunBullet.gameObject;
-            case DevolutionState.CAVEMEN: return stoneBullet.gameObject;
-            case DevolutionState.MONKEY: return bananaBullet.gameObject;
-            default: return null;
-        }
+            DevolutionState.HUMAN => gunBullet.gameObject,
+            DevolutionState.CAVEMEN => stoneBullet.gameObject,
+            DevolutionState.MONKE => bananaBullet.gameObject,
+            _ => null,
+        };
     }
 
     public float GetWalkingSpeed()
     {
-        switch (state)
+        return state switch
         {
-            case DevolutionState.HUMAN: return humanSpeed;
-            case DevolutionState.CAVEMEN: return cavemenSpeed;
-            case DevolutionState.MONKEY: return monkeySpeed;
-            default: return 0;
-        }
+            DevolutionState.HUMAN => humanSpeed,
+            DevolutionState.CAVEMEN => cavemenSpeed,
+            DevolutionState.MONKE => monkeySpeed,
+            _ => 0,
+        };
     }
 
     public float GetJumpPower()
     {
-        switch (state)
+        return state switch
         {
-            case DevolutionState.HUMAN: return humanJump;
-            case DevolutionState.CAVEMEN: return cavemenJump;
-            case DevolutionState.MONKEY: return monkeyJump;
-            default: return 0;
-        }
+            DevolutionState.HUMAN => humanJump,
+            DevolutionState.CAVEMEN => cavemenJump,
+            DevolutionState.MONKE => monkeyJump,
+            _ => 0,
+        };
     }
 
     // Start is called before the first frame update
