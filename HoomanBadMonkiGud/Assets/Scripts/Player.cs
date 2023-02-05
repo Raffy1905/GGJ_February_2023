@@ -41,6 +41,24 @@ public class Player : Entity
         // Attack is not used -> PlayerController.Shoot();
     }
 
+    public void Shoot()
+    {
+        switch (state)
+        {
+            case DevolutionState.HUMAN:
+                AudioManager.Instance.PlayByName("shoot");
+                break;
+            case DevolutionState.CAVEMEN:
+                AudioManager.Instance.PlayByName("rock");
+                break;
+            case DevolutionState.MONKE:
+                AudioManager.Instance.PlayByName("boomerang");
+                if(Random.Range(0, 10) < 2)
+                    AudioManager.Instance.PlayByName("monkey attack");
+                break;
+        }
+    }
+
     public void Devolve()
     {
         switch (state)
@@ -62,6 +80,13 @@ public class Player : Entity
     public DevolutionState GetDevolutionState()
     {
         return state;
+    }
+
+    public void Jump()
+    {
+        if (AudioManager.Instance == null)
+            return;
+        AudioManager.Instance.PlayByName("jump");
     }
 
     public GameObject GetBullet()
@@ -106,6 +131,20 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
-
+        if (ThemeManager.instance != null)
+        {
+            switch (state)
+            {
+                case DevolutionState.HUMAN:
+                    ThemeManager.instance.ThemeID(1);
+                    break;
+                case DevolutionState.CAVEMEN:
+                    ThemeManager.instance.ThemeID(2);
+                    break;
+                case DevolutionState.MONKE:
+                    ThemeManager.instance.ThemeID(3);
+                    break;
+            }
+        }
     }
 }
