@@ -70,6 +70,20 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
-
+        if (ThemeManager.instance != null)
+        {
+            switch (state)
+            {
+                case DevolutionState.HUMAN:
+                    ThemeManager.instance.ThemeID(1);
+                    break;
+                case DevolutionState.CAVEMEN:
+                    ThemeManager.instance.ThemeID(2);
+                    break;
+                case DevolutionState.MONKEY:
+                    ThemeManager.instance.ThemeID(3);
+                    break;
+            }
+        }
     }
 }
