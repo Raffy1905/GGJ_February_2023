@@ -9,7 +9,6 @@ public class PlayerControls : MonoBehaviour
 
     public Rigidbody2D player;
     public BoxCollider2D playerCollider;
-    climbFactor;
     
     public float shootDelay;
     float lastTimeShot;
@@ -140,13 +139,13 @@ public class PlayerControls : MonoBehaviour
         {
             if (_grounded)
             {
-                player.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+                player.AddForce(Vector2.up * Player.Instance.GetJumpPower(), ForceMode2D.Impulse);
             }
             if (_climbing && !_grounded)
             {                
                 _climbing = false;
                 player.gravityScale = 1;
-                player.AddForce(new Vector2(jumpPower * Input.GetAxis("Horizontal") / 4, 0), ForceMode2D.Impulse);
+                player.AddForce(new Vector2(Player.Instance.GetJumpPower() * Input.GetAxis("Horizontal") / 4, 0), ForceMode2D.Impulse);
             }
         }
     }
@@ -157,7 +156,7 @@ public class PlayerControls : MonoBehaviour
         if (((!_collidedWithRightWall && Input.GetAxis("Horizontal") < 0) || 
             (!_collidedWithLeftWall && Input.GetAxis("Horizontal") > 0)))
         {
-            movement += new Vector2(Time.deltaTime * speed * Input.GetAxis("Horizontal"), 0);
+            movement += new Vector2(Time.deltaTime * Player.Instance.GetWalkingSpeed() * Input.GetAxis("Horizontal"), 0);
         }
         
         if ((_ableToClimb && Input.GetAxis("Vertical") != 0) || _climbing)
@@ -173,7 +172,7 @@ public class PlayerControls : MonoBehaviour
         {
             player.gravityScale = 0;
             int axisFactor = Input.GetAxis("Vertical") != 0 ? (Input.GetAxis("Vertical") > 0 ? 1 : -1) : 0;
-            movement = new Vector2(0, Time.deltaTime * speed / climbFactor * axisFactor);
+            movement = new Vector2(0, Time.deltaTime * Player.Instance.GetWalkingSpeed() / Player.Instance.climbingFactor * axisFactor);
             if ((movement.y < 0 && _grounded) || (_climbingTopReached && Input.GetAxis("Vertical") >= 0))
             {
                 movement.y = 0;
@@ -190,6 +189,5 @@ public class PlayerControls : MonoBehaviour
         }
         
         transform.Translate(movement);
-        }
     }
 }
