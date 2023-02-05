@@ -96,6 +96,17 @@ public class Player : Entity
         return state;
     }
 
+    public int GetStateNumber()
+    {
+        return state switch
+        {
+            DevolutionState.HUMAN => 0,
+            DevolutionState.CAVEMEN => 1,
+            DevolutionState.MONKE => 2,
+            _ => 2,
+        };
+    }
+
     public void Jump()
     {
         if (AudioManager.Instance == null)
