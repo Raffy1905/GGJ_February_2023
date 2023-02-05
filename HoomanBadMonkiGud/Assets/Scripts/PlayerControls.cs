@@ -9,8 +9,7 @@ public class PlayerControls : MonoBehaviour
 
     public Rigidbody2D player;
     public BoxCollider2D playerCollider;
-    public int speed, jumpPower;
-    public GameObject bullet;
+    public Player playerConfigs;
     
     public float shootDelay;
     float lastTimeShot;
@@ -61,7 +60,7 @@ public class PlayerControls : MonoBehaviour
         if((Time.time - lastTimeShot) > shootDelay)
         {
             lastTimeShot = Time.time;
-            GameObject bulletInstance = Instantiate(bullet, player.transform.position, bullet.transform.rotation);
+            GameObject bulletInstance = Instantiate(playerConfigs.GetBullet(), player.transform.position, playerConfigs.GetBullet().transform.rotation);
             Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), bulletInstance.GetComponent<Collider2D>());
         }
     }
@@ -104,7 +103,11 @@ public class PlayerControls : MonoBehaviour
         if(Input.GetButtonDown("Fire1"))
         {
             Shoot();
-        } 
+        }
+        if (Input.GetButtonDown("Jump") && _grounded)
+        {
+            player.AddForce(Vector2.up * playerConfigs.GetJumpPower(), ForceMode2D.Impulse);
+        }
     }
 
     void FixedUpdate()
@@ -113,12 +116,9 @@ public class PlayerControls : MonoBehaviour
         if ((!_collidedWithRightWall && Input.GetAxis("Horizontal") < 0) || 
             (!_collidedWithLeftWall && Input.GetAxis("Horizontal") > 0))
         {
-            movement += new Vector2(Time.deltaTime * speed * Input.GetAxis("Horizontal"), 0);
+            movement += new Vector2(Time.deltaTime * playerConfigs.GetWalkingSpeed() * Input.GetAxis("Horizontal"), 0);
             transform.Translate(movement);
         }
-        if(Input.GetButton("Jump") && _grounded)
-        {
-            player.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-        }
+        
     }
 }
