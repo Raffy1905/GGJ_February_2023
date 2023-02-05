@@ -51,6 +51,10 @@ public class PlayerControls : MonoBehaviour
                 else
                 {
                     collidingGround.Add(collision.gameObject, CollisionDirection.Ground);
+                    if (collision.collider.bounds.max.y > playerCollider.bounds.min.y)
+                    {
+                        player.position = new Vector2(player.position.x, collision.collider.bounds.max.y);
+                    }
                     _grounded = true;
                 }
             }
