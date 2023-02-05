@@ -487,6 +487,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: be2a567ec9af8124692ede06a58657d4, type: 3}
     volume: 0.662
     source: {fileID: 0}
+  - name: devolve
+    clip: {fileID: 8300000, guid: f93bae48aed66694c92a174526888d05, type: 3}
+    volume: 0.696
+    source: {fileID: 0}
 --- !u!1 &1195428902
 GameObject:
   m_ObjectHideFlags: 0
