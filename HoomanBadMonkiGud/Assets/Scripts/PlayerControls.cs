@@ -62,6 +62,7 @@ public class PlayerControls : MonoBehaviour
             lastTimeShot = Time.time;
             GameObject bulletInstance = Instantiate(playerConfigs.GetBullet(), player.transform.position, playerConfigs.GetBullet().transform.rotation);
             Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), bulletInstance.GetComponent<Collider2D>());
+
         }
     }
 

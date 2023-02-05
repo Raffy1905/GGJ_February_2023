@@ -28,6 +28,13 @@ public class Player : Entity
         return state;
     }
 
+    public void Jump()
+    {
+        if (AudioManager.Instance == null)
+            return;
+        AudioManager.Instance.PlayByName("jump")
+    }
+
     public GameObject GetBullet()
     {
         switch (state)

@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager Instance;
+    public static AudioManager Instance;
+
+    public Sound[] Sounds;
     private void Awake()
     {
         if (Instance == null)
@@ -16,5 +18,36 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        foreach(Sound s in Sounds) 
+        { 
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.volume = s.volume;
+        }
     }
+
+    public void PlayByName(string name)
+    {
+        Sound s = Array.Find(Sounds, s => s.name == name);
+        if (s == null)
+        {
+            Debug.LogError("Sound " + name + " not found!");
+            return;
+        }
+        Debug.Log("Playing " + s.name);
+        s.source.Play();
+    }
+
+    public void PlayByIndex(int index)
+    {
+        if(index < 0 || index > Sounds.Length)
+        {
+            Debug.LogError("Index " + index + " out of bounds for Sounds!");
+            return;
+        }
+        Debug.Log("Playing " + Sounds[index].name);
+        Sounds[index].source.Play();
+    }
+
 }
